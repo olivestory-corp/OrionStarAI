@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器人导航控制台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-item label {
+            display: block;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .info-item span {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        #console {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .log-entry {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .log-info {
+            color: #4fc3f7;
+        }
+
+        .log-success {
+            color: #81c784;
+        }
+
+        .log-error {
+            color: #e57373;
+            background: rgba(229, 115, 115, 0.1);
+        }
+
+        .log-warning {
+            color: #ffb74d;
+        }
+
+        .place-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .place-item {
+            background: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .place-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .place-info {
+            flex-grow: 1;
+        }
+
+        .place-name {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .place-coords {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-ok {
+            background: #81c784;
+            color: white;
+        }
+
+        .status-forbidden {
+            background: #e57373;
+            color: white;
+        }
+
+        .status-outside {
+            background: #ffb74d;
+            color: white;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .navigating {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 机器人导航控制台</h1>
+            <p>OrionStar Robot Navigation SDK Demo</p>
+        </div>
+
+        <!-- 机器人状态信息 -->
+        <div class="card">
+            <h2>📊 机器人状态</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>定位状态</label>
+                    <span id="estimateStatus">检查中...</span>
+                </div>
+                <div class="info-item">
+                    <label>当前地图</label>
+                    <span id="mapName">加载中...</span>
+                </div>
+                <div class="info-item">
+                    <label>X 坐标</label>
+                    <span id="posX">--</span>
+                </div>
+                <div class="info-item">
+                    <label>Y 坐标</label>
+                    <span id="posY">--</span>
+                </div>
+                <div class="info-item">
+                    <label>方向角</label>
+                    <span id="posTheta">--</span>
+                </div>
+                <div class="info-item">
+                    <label>导航状态</label>
+                    <span id="navStatus">空闲</span>
+                </div>
+            </div>
+            <div class="button-group" style="margin-top: 20px;">
+                <button onclick="refreshStatus()">🔄 刷新状态</button>
+                <button onclick="updatePosition()">📍 更新位置</button>
+            </div>
+        </div>
+
+        <!-- 位置管理 -->
+        <div class="card">
+            <h2>📍 位置管理</h2>
+            <input type="text" id="locationName" placeholder="输入位置名称...">
+            <div class="button-group">
+                <button onclick="saveLocation()">💾 保存当前位置</button>
+                <button onclick="queryLocation()">🔍 查询位置</button>
+                <button onclick="loadPlaceList()">📋 加载位置列表</button>
+            </div>
+            <div id="placeList" class="place-list"></div>
+        </div>
+
+        <!-- 导航控制 -->
+        <div class="card">
+            <h2>🚀 导航控制</h2>
+            <select id="destinationSelect">
+                <option value="">选择目的地...</option>
+            </select>
+            <input type="text" id="destinationInput" placeholder="或输入目的地名称...">
+            <div class="button-group">
+                <button onclick="startNav()" id="startNavBtn">▶️ 开始导航</button>
+                <button onclick="stopNav()" class="danger">⏹️ 停止导航</button>
+            </div>
+        </div>
+
+        <!-- 控制台日志 -->
+        <div class="card">
+            <h2>📝 控制台日志</h2>
+            <div id="console"></div>
+            <button onclick="clearConsole()" class="danger" style="margin-top: 15px; width: 100%;">
+                🗑️ 清空日志
+            </button>
+        </div>
+    </div>
+
+    <!-- 引入SDK -->
+    <script src="robot-navigation-sdk.js"></script>
+
+    <script>
+        // 日志函数
+        function log(message, type = 'info') {
+            const console = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            const logClass = `log-${type}`;
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${logClass}`;
+            entry.textContent = `[${timestamp}] ${message}`;
+            console.appendChild(entry);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        // 初始化
+        async function init() {
+            log('初始化机器人导航SDK...', 'info');
+
+            // 设置导航状态回调
+            RobotNavSDK.setNavigationStatusCallback((status) => {
+                log(`导航状态更新: ${status.message}`, 'warning');
+                document.getElementById('navStatus').textContent = status.message;
+
+                if (status.status === 1050) {
+                    log(`距离目的地: ${status.extraData} 米`, 'info');
+                }
+            });
+
+            // 刷新初始状态
+            await refreshStatus();
+            await loadPlaceList();
+
+            log('初始化完成！', 'success');
+        }
+
+        // 刷新机器人状态
+        async function refreshStatus() {
+            try {
+                // 检查定位状态
+                const isEstimated = await RobotNavSDK.isRobotEstimate();
+                document.getElementById('estimateStatus').textContent = isEstimated ? '✅ 已定位' : '❌ 未定位';
+                document.getElementById('estimateStatus').style.color = isEstimated ? '#81c784' : '#e57373';
+
+                // 获取地图名称
+                const mapName = await RobotNavSDK.getMapName();
+                document.getElementById('mapName').textContent = mapName || '未知';
+
+                // 获取位置
+                if (isEstimated) {
+                    await updatePosition();
+                }
+
+                log('状态刷新成功', 'success');
+            } catch (error) {
+                log(`刷新状态失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 更新位置信息
+        async function updatePosition() {
+            try {
+                const pos = await RobotNavSDK.getPosition();
+                document.getElementById('posX').textContent = pos.x.toFixed(2);
+                document.getElementById('posY').textContent = pos.y.toFixed(2);
+                document.getElementById('posTheta').textContent = pos.theta.toFixed(2);
+                log(`位置更新: (${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.theta.toFixed(2)})`, 'info');
+            } catch (error) {
+                log(`更新位置失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 保存位置
+        async function saveLocation() {
+            const name = document.getElementById('locationName').value.trim();
+            if (!name) {
+                log('请输入位置名称', 'warning');
+                return;
+            }
+
+            try {
+                const result = await RobotNavSDK.setLocation(name);
+                log(`位置保存成功: ${name}`, 'success');
+                document.getElementById('locationName').value = '';
+                await loadPlaceList();
+            } catch (error) {
+                log(`保存位置失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 查询位置
+        async function queryLocation() {
+            const name = document.getElementById('locationName').value.trim();
+            if (!name) {
+                log('请输入位置名称', 'warning');
+                return;
+            }
+
+            try {
+                const location = await RobotNavSDK.getLocation(name);
+                if (location.exist) {
+                    log(`位置查询成功: ${name} (${location.x.toFixed(2)}, ${location.y.toFixed(2)})`, 'success');
+                } else {
+                    log(`位置不存在: ${name}`, 'warning');
+                }
+            } catch (error) {
+                log(`查询位置失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 加载位置列表
+        async function loadPlaceList() {
+            try {
+                const places = await RobotNavSDK.getPlaceList();
+                const listDiv = document.getElementById('placeList');
+                const selectEl = document.getElementById('destinationSelect');
+
+                listDiv.innerHTML = '';
+                selectEl.innerHTML = '<option value="">选择目的地...</option>';
+
+                places.forEach(place => {
+                    // 添加到列表
+                    const item = document.createElement('div');
+                    item.className = 'place-item';
+
+                    const statusClass = place.status === 0 ? 'status-ok' :
+                                       place.status === 1 ? 'status-forbidden' : 'status-outside';
+                    const statusText = place.status === 0 ? '可达' :
+                                      place.status === 1 ? '禁行' : '地图外';
+
+                    item.innerHTML = `
+                        <div class="place-info">
+                            <div class="place-name">${place.name}</div>
+                            <div class="place-coords">坐标: (${place.x.toFixed(2)}, ${place.y.toFixed(2)})</div>
+                        </div>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    `;
+                    listDiv.appendChild(item);
+
+                    // 添加到下拉列表
+                    if (place.status === 0) {
+                        const option = document.createElement('option');
+                        option.value = place.name;
+                        option.textContent = place.name;
+                        selectEl.appendChild(option);
+                    }
+                });
+
+                log(`已加载 ${places.length} 个位置点`, 'success');
+            } catch (error) {
+                log(`加载位置列表失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 开始导航
+        async function startNav() {
+            const destination = document.getElementById('destinationSelect').value ||
+                              document.getElementById('destinationInput').value.trim();
+
+            if (!destination) {
+                log('请选择或输入目的地', 'warning');
+                return;
+            }
+
+            try {
+                log(`开始导航到: ${destination}`, 'info');
+                document.getElementById('navStatus').textContent = '导航中...';
+                document.getElementById('startNavBtn').classList.add('navigating');
+
+                const result = await RobotNavSDK.startNavigation(destination);
+                log(`导航完成: ${result.message}`, 'success');
+                document.getElementById('navStatus').textContent = result.message;
+            } catch (error) {
+                log(`导航失败: ${error.message}`, 'error');
+                document.getElementById('navStatus').textContent = '导航失败';
+            } finally {
+                document.getElementById('startNavBtn').classList.remove('navigating');
+            }
+        }
+
+        // 停止导航
+        async function stopNav() {
+            try {
+                const result = await RobotNavSDK.stopNavigation();
+                log(result.message, 'warning');
+                document.getElementById('navStatus').textContent = '已停止';
+            } catch (error) {
+                log(`停止导航失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 清空日志
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '';
+            log('日志已清空', 'info');
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

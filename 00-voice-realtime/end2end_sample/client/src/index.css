@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply h-auto min-h-screen bg-white text-slate-900;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    html, body {
+      min-height: -webkit-fill-available;
+    }
+  }
+}
+
+@layer components {
+  .messages-container {
+    @apply flex-1 overflow-y-auto p-4 bg-slate-50 rounded-lg;
+  }
+
+  .messages-container::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .messages-container::-webkit-scrollbar-track {
+    @apply bg-slate-100 rounded-full;
+  }
+
+  .messages-container::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full hover:bg-slate-400;
+  }
+
+  .record-button {
+    @apply w-20 h-20 rounded-full border-0 text-3xl transition-all duration-300 cursor-pointer shadow-lg;
+  }
+
+  .record-button:hover:not(:disabled) {
+    @apply scale-105;
+  }
+
+  .record-button:active:not(:disabled) {
+    @apply scale-95;
+  }
+
+  .record-button.recording {
+    @apply animate-pulse;
+  }
+
+  .msg-bubble {
+    @apply inline-block px-4 py-2 rounded-lg;
+  }
+
+  .msg-user {
+    @apply bg-primary-500 text-white max-w-xs;
+  }
+
+  .msg-assistant {
+    @apply bg-slate-200 text-slate-900 max-w-xs;
+  }
+
+  .msg-tool {
+    @apply bg-amber-50 text-amber-900 border border-amber-200 max-w-xs;
+  }
+
+  .hover-shadow {
+    @apply transition-all duration-300;
+  }
+
+  .hover-shadow:hover {
+    @apply -translate-y-0.5 shadow-lg;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 1024px) {
+  .map-container {
+    @apply min-h-80 h-80 relative mb-4 lg:mb-0;
+  }
+
+  .messages-container {
+    @apply max-h-40 min-h-24;
+  }
+
+  .record-button {
+    @apply w-16 h-16 text-2xl;
+  }
+
+  .product-modal {
+    @apply mx-1;
+  }
+}
+
+@media (max-width: 640px) {
+  .map-container {
+    @apply min-h-72 h-72 relative mb-4;
+  }
+
+  .messages-container {
+    @apply max-h-36 min-h-20;
+  }
+
+  .record-button {
+    @apply w-14 h-14 text-xl;
+  }
+
+  .card-body {
+    @apply p-3;
+  }
+
+  .msg-bubble {
+    @apply max-w-56;
+  }
+}

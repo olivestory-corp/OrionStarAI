@@ -1,0 +1,24 @@
+{
+  "name": "end2end_live_test",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "preinstall": "echo 📦 正在安装所有依赖...",
+    "postinstall": "echo 📂 正在复制 VAD 资源... && cd client && node scripts/copy-vad-assets.js && cd .. && echo \"\" && echo ✅ 所有依赖安装完成！ && echo \"\" && echo 👉 下一步: 运行 npm run build 进行构建 && echo \"\"",
+    "postbuild": "echo \"\" && echo ✅ 构建完成！ && echo \"\" && echo 👉 下一步: 运行 npm run dev 启动开发服务器 && echo \"\"",
+    "dev": "concurrently -k --kill-signal SIGINT -p [{name}] -n server,client -c cyan,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w server && npm run build -w client",
+    "dev:server": "npm run dev -w server",
+    "dev:client": "npm run dev -w client"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "ws": "^8.18.3"
+  }
+}

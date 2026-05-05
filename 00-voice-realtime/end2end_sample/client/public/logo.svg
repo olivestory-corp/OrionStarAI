@@ -1,0 +1,47 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 背景渐变：深蓝黑 -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <!-- 前景渐变：蓝绿 -> 紫 -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 圆角矩形背景 -->
+  <rect x="64" y="64" width="896" height="896" rx="220" fill="url(#bg)"/>
+
+  <!-- 对话气泡轮廓 -->
+  <path
+    d="M320 320h384c53 0 96 43 96 96v160c0 53-43 96-96 96H448l-96 96v-96h-32c-53 0-96-43-96-96V416c0-53 43-96 96-96z"
+    fill="none"
+    stroke="url(#accent)"
+    stroke-width="40"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- 内部音波线 -->
+  <path
+    d="M352 512
+       C384 464, 416 464, 448 512
+       S512 560, 544 512
+       608 464, 640 512
+       704 560, 736 512"
+    fill="none"
+    stroke="url(#accent)"
+    stroke-width="32"
+    stroke-linecap="round"
+  />
+
+  <!-- 末端发光点（AI 回应的小亮点） -->
+  <circle cx="736" cy="512" r="20" fill="#A855F7">
+    <animate attributeName="r" values="16;20;16" dur="1.4s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="1.4s" repeatCount="indefinite" />
+  </circle>
+</svg>

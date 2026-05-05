@@ -1,0 +1,49 @@
+# Dependencies
+node_modules
+*/node_modules
+
+# Build outputs (will be rebuilt in Docker)
+client/build
+server/dist
+
+# Development files
+.git
+.gitignore
+*.md
+!README.md
+
+# IDE
+.idea
+.vscode
+.deepvcode
+
+# Python
+__pycache__
+*.py
+*.pyc
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment files - 允许复制到 Docker
+# 注意：生产环境敏感信息应通过 K8s Secrets 注入
+!server/.env.production
+
+# Keys - 允许复制 key.json
+!server/key/key.json
+
+# SSL certs
+ssl/
+
+# Debug & Test
+server/debug
+server/test-*.ts
+server/test-*.js
+
+# Android
+e2e_android
+
+# Scripts
+scripts

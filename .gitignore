@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS / build artefacts that may exist inside upstream samples
+node_modules/
+**/node_modules/
+*.log
+__pycache__/
+**/__pycache__/
+.venv/
+**/.venv/
+*.pyc
+
+# Local env files (do not commit secrets, even by accident)
+.env
+**/.env
+.env.local
+**/.env.local

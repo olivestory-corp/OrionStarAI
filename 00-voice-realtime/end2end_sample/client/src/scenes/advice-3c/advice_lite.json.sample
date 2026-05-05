@@ -1,0 +1,83 @@
+{
+  "fetchTime": "2025-12-08T18:05:57.793Z",
+  "totalCategories": 2,
+  "totalProducts": 3,
+  "categories": [
+    {
+      "name": "APPLE PRODUCTS",
+      "slug": "apple-product",
+      "iconUrl": "https://example.com/icon/apple.png",
+      "productCount": 2,
+      "products": [
+        {
+          "code": "A0000001",
+          "name": "Sample iPad Wi-Fi 128GB - Silver",
+          "brand": "APPLE",
+          "spec": "A16 / 128GB / 11'' / iPadOS 18 / WiFi",
+          "priceSrp": 12900,
+          "priceSale": 10790,
+          "discount": 16.4,
+          "type": "instock",
+          "warranty": "1Y",
+          "menuListName": "iPad",
+          "menuListDtlName": "iPad Wifi",
+          "installmentMonths": [3, 6, 10],
+          "installmentBanks": ["Bank A", "Bank B"],
+          "hasPromotion": true,
+          "fastDelivery": true,
+          "views": "1.0 K",
+          "picUrl": "https://example.com/products/sample-ipad.jpg",
+          "productUrl": "https://example.com/ipad/sample-ipad"
+        },
+        {
+          "code": "A0000002",
+          "name": "Sample MacBook Air M3 256GB",
+          "brand": "APPLE",
+          "spec": "M3 / 8GB / 256GB / 13.6''",
+          "priceSrp": 39900,
+          "priceSale": 37900,
+          "discount": 5.0,
+          "type": "instock",
+          "warranty": "1Y",
+          "menuListName": "MacBook",
+          "menuListDtlName": "MacBook Air",
+          "installmentMonths": [6, 10, 12],
+          "installmentBanks": ["Bank A", "Bank C"],
+          "hasPromotion": false,
+          "fastDelivery": true,
+          "views": "5.2 K",
+          "picUrl": "https://example.com/products/sample-macbook.jpg",
+          "productUrl": "https://example.com/macbook/sample-macbook-air"
+        }
+      ]
+    },
+    {
+      "name": "GAMING",
+      "slug": "gaming",
+      "iconUrl": "https://example.com/icon/gaming.png",
+      "productCount": 1,
+      "products": [
+        {
+          "code": "G0000001",
+          "name": "Sample Gaming Laptop RTX 4060",
+          "brand": "SAMPLE",
+          "spec": "Intel i7 / 16GB / 512GB / RTX 4060 / 15.6'' FHD 144Hz",
+          "priceSrp": 45900,
+          "priceSale": 42900,
+          "discount": 6.5,
+          "type": "instock",
+          "warranty": "2Y",
+          "menuListName": "Notebook",
+          "menuListDtlName": "Gaming Notebook",
+          "installmentMonths": [6, 10],
+          "installmentBanks": ["Bank B", "Bank C"],
+          "hasPromotion": true,
+          "fastDelivery": false,
+          "views": "3.1 K",
+          "picUrl": "https://example.com/products/sample-gaming.jpg",
+          "productUrl": "https://example.com/notebook/sample-gaming-laptop"
+        }
+      ]
+    }
+  ]
+}

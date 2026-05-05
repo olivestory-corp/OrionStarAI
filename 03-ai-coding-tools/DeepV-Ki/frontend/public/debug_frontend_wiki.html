@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wiki 状态调试</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Wiki 状态调试工具</h1>
+
+    <h2>测试 1: 单个项目查询</h2>
+    <button onclick="testSingleProject()">查询 token_board</button>
+    <pre id="single-result">点击按钮开始测试...</pre>
+
+    <h2>测试 2: 批量查询</h2>
+    <button onclick="testBatchQuery()">批量查询</button>
+    <pre id="batch-result">点击按钮开始测试...</pre>
+
+    <h2>测试 3: 项目 Key 构建</h2>
+    <button onclick="testProjectKey()">测试项目 Key</button>
+    <pre id="key-result">点击按钮开始测试...</pre>
+
+    <script>
+        async function testSingleProject() {
+            const result = document.getElementById('single-result');
+            result.innerHTML = '⏳ 查询中...';
+
+            try {
+                const projectKey = 'gitlab:konghaifeng/token_board';
+                const url = `/api/wiki/projects/${encodeURIComponent(projectKey)}/status`;
+
+                result.innerHTML += `\n📤 请求: GET ${url}`;
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                result.innerHTML = `
+✅ 成功！
+
+请求 URL: ${url}
+状态码: ${response.status}
+
+响应数据:
+${JSON.stringify(data, null, 2)}
+                `;
+                result.className = 'success';
+            } catch (err) {
+                result.innerHTML = `❌ 失败: ${err.message}`;
+                result.className = 'error';
+            }
+        }
+
+        async function testBatchQuery() {
+            const result = document.getElementById('batch-result');
+            result.innerHTML = '⏳ 查询中...';
+
+            try {
+                const projectKeys = [
+                    'gitlab:konghaifeng/token_board',
+                    'gitlab:test/project'
+                ];
+
+                result.innerHTML += `\n📤 查询项目: ${projectKeys.join(', ')}`;
+
+                const response = await fetch('/api/wiki/projects/status/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ project_keys: projectKeys })
+                });
+
+                const data = await response.json();
+
+                result.innerHTML = `
+✅ 成功！
+
+状态码: ${response.status}
+
+响应数据:
+${JSON.stringify(data, null, 2)}
+
+token_board 状态: ${data['gitlab:konghaifeng/token_board']?.status || '未找到'}
+                `;
+                result.className = 'success';
+            } catch (err) {
+                result.innerHTML = `❌ 失败: ${err.message}`;
+                result.className = 'error';
+            }
+        }
+
+        async function testProjectKey() {
+            const result = document.getElementById('key-result');
+
+            // 模拟项目数据
+            const mockProject = {
+                id: 123,
+                name: 'token_board',
+                path: 'token_board',
+                path_with_namespace: 'konghaifeng/token_board'
+            };
+
+            const namespace = mockProject.path_with_namespace.split('/')[0];
+            const repoName = mockProject.path;
+            const projectKey = `gitlab:${namespace}/${repoName}`;
+
+            result.innerHTML = `
+📋 项目信息:
+  name: ${mockProject.name}
+  path: ${mockProject.path}
+  path_with_namespace: ${mockProject.path_with_namespace}
+
+🔑 构建的 Project Key:
+  namespace: ${namespace}
+  repoName: ${repoName}
+  projectKey: ${projectKey}
+
+✅ 应该匹配数据库中的 key: gitlab:konghaifeng/token_board
+            `;
+            result.className = 'info';
+        }
+    </script>
+</body>
+</html>

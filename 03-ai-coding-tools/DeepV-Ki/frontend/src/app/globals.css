@@ -1,0 +1,657 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap");
+
+/* Define dark mode variant */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* DeepVO Modern color palette - light mode (iOS style) */
+  --background: #ffffff; /* iOS system white background */
+  --foreground: #111827; /* Deep gray for text */
+  --shadow-color: rgba(46, 154, 255, 0.15); /* Vibrant Blue shadow */
+  --accent-primary: #1a1a1a; /* Primary deep black */
+  --accent-primary-light: #60a5fa; /* Light variant (Blue 400) */
+  --accent-primary-dark: #0066ff; /* Dark variant (Apple Blue) */
+  --accent-secondary: #2e9aff; /* Secondary (Sky Blue) */
+  --accent-tertiary: #06b6d4; /* Tertiary cyan (Cyan 500) */
+  --border-color: rgba(0, 0, 0, 0.1); /* iOS style subtle border */
+  --card-bg: #ffffff; /* iOS system white cards */
+  --highlight: #f59e0b; /* Warning orange for highlights */
+  --muted: #6b7280; /* Medium gray for muted text */
+  --link-color: #0066ff; /* Dark variant for links (Apple Blue) */
+
+  /* Material Design status colors */
+  --error: #ef4444; /* Error red */
+  --success: #10b981; /* Success green */
+  --warning: #f59e0b; /* Warning orange */
+  --info: #2e9aff; /* Info blue */
+
+  /* iOS specific colors */
+  --ios-background-secondary: #f2f2f7; /* iOS secondary background */
+  --ios-background-tertiary: #ffffff; /* iOS tertiary background */
+  --ios-separator: rgba(60, 60, 67, 0.29); /* iOS separator color */
+  --ios-label-primary: #000000; /* iOS primary label */
+  --ios-label-secondary: rgba(60, 60, 67, 0.6); /* iOS secondary label */
+}
+
+html[data-theme='dark'] {
+  /* DeepVO Modern color palette - dark mode (iOS style) */
+  --background: #000000; /* iOS system black background */
+  --foreground: #ffffff; /* iOS system white text */
+  --shadow-color: rgba(46, 154, 255, 0.25); /* Vibrant Blue shadow */
+  --accent-primary: #2e9aff; /* Lighter primary for dark mode (Sky Blue) */
+  --accent-primary-light: #60a5fa; /* Even lighter variant (Blue 400) */
+  --accent-primary-dark: #0066ff; /* Original primary as dark variant (Apple Blue) */
+  --accent-secondary: #60a5fa; /* Lighter secondary (Blue 400) */
+  --accent-tertiary: #22d3ee; /* Tertiary cyan (Cyan 400) */
+  --border-color: rgba(255, 255, 255, 0.15); /* iOS dark mode border */
+  --card-bg: #1c1c1e; /* iOS dark mode card background */
+  --highlight: #fbbf24; /* Lighter warning orange */
+  --muted: #98989d; /* iOS dark mode secondary label */
+  --link-color: #2e9aff; /* Light primary for links (Sky Blue) */
+
+  /* Material Design status colors for dark mode */
+  --error: #f87171; /* Lighter error red */
+  --success: #34d399; /* Lighter success green */
+  --warning: #fbbf24; /* Lighter warning orange */
+  --info: #60a5fa; /* Lighter info blue */
+
+  /* iOS dark mode specific colors */
+  --ios-background-secondary: #1c1c1e; /* iOS dark secondary background */
+  --ios-background-tertiary: #2c2c2e; /* iOS dark tertiary background */
+  --ios-separator: rgba(84, 84, 88, 0.6); /* iOS dark separator color */
+  --ios-label-primary: #ffffff; /* iOS dark primary label */
+  --ios-label-secondary: rgba(235, 235, 245, 0.6); /* iOS dark secondary label */
+}
+
+/* Fix for unreadable <select> options in Chrome's dark mode */
+[data-theme="dark"] select option {
+  background: var(--background);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Roboto", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-serif: "Roboto", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-mono: "Roboto", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-chinese: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-english: "Roboto", system-ui, -apple-system, "BlinkMacSystemFont", "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom shadow styles - more subtle for Japanese aesthetic */
+.shadow-custom {
+  box-shadow: 0 4px 8px -2px var(--shadow-color);
+}
+
+/* iOS-style clean background */
+.paper-texture {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(180deg, rgba(129, 139, 234, 0.02) 0%, transparent 50%);
+}
+
+/* iOS dark mode background */
+html[data-theme='dark'] .paper-texture {
+  background-image:
+    linear-gradient(180deg, rgba(165, 173, 238, 0.03) 0%, transparent 50%);
+}
+
+/* iOS blur effect utility */
+.ios-blur {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* iOS glassmorphism effect */
+.ios-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme='dark'] .ios-glass {
+  background: rgba(28, 28, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* iOS-style buttons */
+.btn-japanese {
+  background-color: var(--accent-primary-dark);
+  color: white;
+  border: none;
+  border-radius: 0.75rem; /* iOS rounded corners */
+  padding: 0.75rem 1.5rem;
+  font-weight: 700; /* Stronger weight */
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(93, 106, 214, 0.4);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.btn-japanese:hover {
+  background-color: #4a5bc9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(93, 106, 214, 0.5);
+}
+
+.btn-japanese:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(93, 106, 214, 0.4);
+}
+
+.btn-japanese:disabled {
+  opacity: 0.5;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* iOS-style inputs */
+.input-japanese {
+  background-color: var(--ios-background-secondary);
+  border: none;
+  border-radius: 0.75rem; /* iOS rounded corners */
+  padding: 0.875rem 1rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.input-japanese:focus {
+  border-color: var(--accent-primary);
+  background-color: var(--background);
+  box-shadow: 0 0 0 4px rgba(129, 139, 234, 0.1);
+  outline: none;
+}
+
+.input-japanese::placeholder {
+  color: var(--ios-label-secondary);
+}
+
+/* iOS-style cards */
+.card-japanese {
+  background-color: var(--card-bg);
+  border: none;
+  border-radius: 1rem; /* iOS card radius */
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.card-japanese:hover {
+  box-shadow: 0 8px 25px var(--shadow-color);
+  transform: translateY(-2px);
+  border-color: var(--accent-primary-light);
+}
+
+/* Font family utilities for different languages */
+.font-chinese {
+  font-family: var(--font-chinese);
+}
+
+.font-english {
+  font-family: var(--font-english);
+}
+
+/* Auto font selection based on content */
+.font-auto {
+  font-family: var(--font-sans);
+}
+
+/* Enhanced typography for Chinese text */
+.text-chinese {
+  font-family: var(--font-chinese);
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+/* Enhanced typography for English text */
+.text-english {
+  font-family: var(--font-english);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* Mixed content typography (default) */
+.text-mixed {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* ========== GitHub Markdown Styles ========== */
+/* Based on GitHub's official markdown rendering style */
+.prose-markdown {
+  max-width: none;
+  word-wrap: break-word;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #24292f;
+}
+
+/* Headings */
+.prose-markdown h1,
+.prose-markdown h2,
+.prose-markdown h3,
+.prose-markdown h4,
+.prose-markdown h5,
+.prose-markdown h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.prose-markdown h1 {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.prose-markdown h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.prose-markdown h3 {
+  font-size: 1.25em;
+}
+
+.prose-markdown h4 {
+  font-size: 1em;
+}
+
+.prose-markdown h5 {
+  font-size: 0.875em;
+}
+
+.prose-markdown h6 {
+  font-size: 0.85em;
+  color: #57606a;
+}
+
+/* Paragraphs */
+.prose-markdown p {
+  margin: 0 0 16px 0;
+}
+
+/* Links */
+.prose-markdown a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+.prose-markdown a:hover {
+  text-decoration: underline;
+}
+
+/* Source links - low key style */
+.prose-markdown .source-link {
+  font-size: 0.75rem !important;
+  color: #6b7280 !important;
+  text-decoration: none !important;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.prose-markdown .source-link:hover {
+  color: #111827 !important;
+  text-decoration: underline !important;
+}
+
+/* Links inside code blocks - low key style */
+.prose-markdown code a {
+  font-size: 0.75rem !important;
+  color: #6b7280 !important;
+  text-decoration: none !important;
+  background: none !important;
+  background-image: none !important;
+  background-size: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.prose-markdown code a:hover {
+  color: #111827 !important;
+  text-decoration: underline !important;
+  background-image: none !important;
+}
+
+/* Override prose a styles for source links */
+.prose-markdown code a.source-link,
+.prose-markdown .source-link {
+  background-image: none !important;
+  background-size: 0 !important;
+}
+
+/* Lists */
+.prose-markdown ul,
+.prose-markdown ol {
+  margin: 0 0 16px 0;
+  padding-left: 2em;
+}
+
+.prose-markdown ul {
+  list-style-type: disc;
+}
+
+.prose-markdown ol {
+  list-style-type: decimal;
+}
+
+.prose-markdown li {
+  margin: 0;
+}
+
+.prose-markdown li > p {
+  margin: 16px 0;
+}
+
+.prose-markdown li + li {
+  margin-top: 0.25em;
+}
+
+/* Task lists */
+.prose-markdown .task-list-item {
+  list-style: none !important;
+}
+
+.prose-markdown .task-list-item::before {
+  content: none !important;
+  display: none !important;
+}
+
+.prose-markdown .contains-task-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.prose-markdown .contains-task-list li {
+  list-style: none !important;
+}
+
+.prose-markdown .contains-task-list li::before {
+  content: none !important;
+  display: none !important;
+}
+
+.prose-markdown input[type="checkbox"] {
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: middle !important;
+  transform: translateY(-0.05em);
+}
+
+.prose-markdown .task-list-item input[type="checkbox"] {
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: middle !important;
+  transform: none;
+}
+
+/* Code */
+.prose-markdown code {
+  background-color: rgba(175, 184, 193, 0.2);
+  border-radius: 6px;
+  margin: 0;
+  padding: 0.2em 0.4em;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 85%;
+}
+
+/* Code blocks */
+.prose-markdown pre {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  overflow: auto;
+  padding: 16px;
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  line-height: 1.45;
+  border: 1px solid #d0d7de;
+}
+
+.prose-markdown pre code {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+}
+
+/* Blockquotes */
+.prose-markdown blockquote {
+  border-left: 0.25em solid #d0d7de;
+  color: #57606a;
+  padding: 0 1em;
+  margin: 0 0 16px 0;
+}
+
+/* Blockquote paragraphs */
+.prose-markdown blockquote > :first-child {
+  margin-top: 0;
+}
+
+.prose-markdown blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* Horizontal rule */
+.prose-markdown hr {
+  background-color: #d0d7de;
+  border: 0;
+  height: 0.25em;
+  margin: 24px 0;
+  padding: 0;
+}
+
+/* Tables */
+.prose-markdown table {
+  border-collapse: collapse;
+  margin: 0 0 16px 0;
+  width: 100%;
+}
+
+.prose-markdown table th,
+.prose-markdown table td {
+  border: 1px solid #d0d7de;
+  padding: 6px 13px;
+  text-align: left;
+}
+
+.prose-markdown table th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+}
+
+.prose-markdown table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+/* Images */
+.prose-markdown img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 0 16px 0;
+  border-radius: 6px;
+}
+
+/* Strong */
+.prose-markdown strong {
+  font-weight: 600;
+}
+
+/* Emphasis */
+.prose-markdown em {
+  font-style: italic;
+}
+
+/* Strikethrough */
+.prose-markdown del {
+  text-decoration: line-through;
+}
+
+/* ========== Dark Mode (GitHub Dark) ========== */
+html[data-theme="dark"] .prose-markdown {
+  color: #c9d1d9;
+}
+
+html[data-theme="dark"] .prose-markdown h1,
+html[data-theme="dark"] .prose-markdown h2 {
+  border-bottom-color: #30363d;
+}
+
+html[data-theme="dark"] .prose-markdown h6 {
+  color: #8b949e;
+}
+
+html[data-theme="dark"] .prose-markdown a {
+  color: #58a6ff;
+}
+
+html[data-theme="dark"] .prose-markdown .source-link {
+  color: #9ca3af !important;
+}
+
+html[data-theme="dark"] .prose-markdown .source-link:hover {
+  color: #e5e7eb !important;
+}
+
+html[data-theme="dark"] .prose-markdown code a {
+  color: #9ca3af !important;
+  background-image: none !important;
+  background-size: 0 !important;
+}
+
+html[data-theme="dark"] .prose-markdown code a:hover {
+  color: #e5e7eb !important;
+  background-image: none !important;
+}
+
+html[data-theme="dark"] .prose-markdown code {
+  background-color: rgba(110, 118, 129, 0.4);
+}
+
+html[data-theme="dark"] .prose-markdown pre {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+
+html[data-theme="dark"] .prose-markdown blockquote {
+  border-left-color: #30363d;
+  color: #8b949e;
+}
+
+html[data-theme="dark"] .prose-markdown hr {
+  background-color: #21262d;
+}
+
+html[data-theme="dark"] .prose-markdown table th,
+html[data-theme="dark"] .prose-markdown table td {
+  border-color: #30363d;
+}
+
+html[data-theme="dark"] .prose-markdown table th {
+  background-color: #161b22;
+}
+
+html[data-theme="dark"] .prose-markdown table tr:nth-child(2n) {
+  background-color: #0d1117;
+}
+
+/* 文件链接复制成功动画 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* 终端光标闪烁动画 */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* 按钮流光动画 */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+/* 文字渐变流光动画 */
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}

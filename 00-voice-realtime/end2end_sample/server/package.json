@@ -1,0 +1,50 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "prebuild": "echo \"\" && echo 🔨 [服务端] 正在编译 TypeScript... && echo \"\"",
+    "build": "npm i && tsc",
+    "start": "node dist/index.js",
+    "prod": "npm i && npm run build && (pm2 delete gemini-server --silent & kill-port 8081 & timeout /t 2 & pm2 start ecosystem.config.js --no-daemon)",
+    "prod:restart": "pm2 restart gemini-server",
+    "prod:stop": "pm2 stop gemini-server",
+    "prod:logs": "pm2 logs gemini-server",
+    "prod:monit": "pm2 monit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.940.0",
+    "@discordjs/opus": "^0.10.0",
+    "@google-cloud/vertexai": "^1.10.0",
+    "@types/compression": "^1.8.1",
+    "@types/multer": "^2.0.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "google-auth-library": "^10.5.0",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "openai": "^6.9.1",
+    "wink-bm25-text-search": "^3.1.2",
+    "wink-nlp-utils": "^2.1.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.0",
+    "@types/ws": "^8.18.1",
+    "kill-port": "^2.0.1",
+    "nodemon": "^3.1.10",
+    "pm2": "^6.0.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

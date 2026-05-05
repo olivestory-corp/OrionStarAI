@@ -1,0 +1,70 @@
+{
+  "name": "agentos-2-live",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "./",
+  "dependencies": {
+    "@openai/agents": "^0.3.3",
+    "@ricky0123/vad-react": "^0.0.35",
+    "@ricky0123/vad-web": "^0.0.29",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.121",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-virtualized-auto-sizer": "^1.0.4",
+    "@types/react-window": "^1.8.8",
+    "buffer": "^6.0.3",
+    "face-api.js": "^0.22.2",
+    "fuse.js": "^7.1.0",
+    "onnxruntime-web": "^1.23.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1",
+    "react-virtualized-auto-sizer": "^1.0.26",
+    "react-window": "^1.8.10",
+    "typescript": "^4.9.5",
+    "util": "^0.12.5",
+    "web-vitals": "^2.1.4",
+    "zod": "^3.25.40"
+  },
+  "scripts": {
+    "start": "node scripts/copy-vad-assets.js && cross-env NODE_OPTIONS=--no-deprecation react-app-rewired start",
+    "dev": "node scripts/copy-vad-assets.js && cross-env NODE_OPTIONS=--no-deprecation react-app-rewired start",
+    "prebuild": "echo \"\" && echo 🔨 [客户端] 正在构建优化的生产版本... && echo \"\"",
+    "build": "npm i && node scripts/copy-vad-assets.js && cross-env GENERATE_SOURCEMAP=false NODE_OPTIONS=--no-deprecation react-app-rewired build && node scripts/copy-vad-assets.js",
+    "build:root": "npm i && node scripts/copy-vad-assets.js && cross-env GENERATE_SOURCEMAP=false NODE_OPTIONS=--no-deprecation PUBLIC_URL=/ react-app-rewired build && node scripts/copy-vad-assets.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "postinstall": "node scripts/copy-vad-assets.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "copy-webpack-plugin": "^13.0.1",
+    "cross-env": "^10.1.0",
+    "postcss": "^8.5.6",
+    "react-app-rewired": "^2.2.1",
+    "tailwindcss": "^3.4.18",
+    "webpackbar": "^7.0.0"
+  }
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 网络访问权限 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <!-- 机器人设置提供者权限 -->
+    <uses-permission android:name="com.ainirobot.coreservice.robotSettingProvider" />
+
+    <!-- 存储权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- 摄像头权限 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+
+    <!-- 麦克风权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+    <!-- 设备唤醒锁 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <application
+        android:name=".E2EApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.E2EModel"
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
+        tools:targetApi="31">
+
+        <!-- 主Activity - WebView应用 (singleTask确保全局唯一实例) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.E2EModel">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 机器人开机启动配置 -->
+            <intent-filter>
+                <action android:name="action.orionstar.default.app" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <!-- 设置Activity - 桌面入口 -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:label="e2e设置"
+            android:theme="@style/Theme.E2EModel">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 机器人开机启动配置 -->
+            <intent-filter>
+                <action android:name="action.orionstar.default.app" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- VAD测试Activity - 桌面入口 -->
+        <activity
+            android:name=".VadTestActivity"
+            android:exported="false"
+            android:label="VAD测试"
+            android:theme="@style/Theme.E2EModel">
+        </activity>
+
+    </application>
+
+</manifest>

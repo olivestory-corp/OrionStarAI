@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+*.js
+*.map
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Credentials and secrets
+key/
+*.json
+!package.json
+!tsconfig.json
+!vite.config.ts
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# DeepVCode Debug Logs
+.deepvcode/
+

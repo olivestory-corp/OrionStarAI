@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  deepx-mini-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: deepx-mini-server
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      HOST: 0.0.0.0
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      VERTEX_CREDENTIALS_PATHS: ${VERTEX_CREDENTIALS_PATHS:-/app/key/credentials.json}
+      VERTEX_DEFAULT_LOCATION: ${VERTEX_DEFAULT_LOCATION:-us-central1}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    volumes:
+      - ./key:/app/key:ro  # Mount credentials as read-only
+      - ./logs:/app/logs
+      - /etc/localtime:/etc/localtime:ro  # Use host timezone
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - deepx-network
+
+networks:
+  deepx-network:
+    driver: bridge

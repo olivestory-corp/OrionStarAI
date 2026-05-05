@@ -1,0 +1,27 @@
+[Unit]
+Description=DeepX Mini Server - Lightweight AI Proxy
+After=network.target
+
+[Service]
+Type=simple
+User=node
+WorkingDirectory=/opt/deepx-mini-server
+ExecStart=/usr/local/bin/node /opt/deepx-mini-server/dist/index.js
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+Environment="NODE_ENV=production"
+
+# Resource limits
+MemoryMax=2G
+CPUQuota=80%
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/deepx-mini-server/logs
+
+[Install]
+WantedBy=multi-user.target

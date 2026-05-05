@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.log
+
+# Environment files (contain secrets)
+.env
+.env.local
+.env.*.local
+server/.env
+server/.env.production
+server/.env.local
+
+# Google Cloud credentials
+*.json
+!package.json
+!tsconfig.json
+!manifest.json
+!*-weights_manifest.json
+!nodemon.json
+!ecosystem.config.js
+key/
+
+# SSL certificates
+ssl/*.key
+ssl/*.crt
+ssl/*.pem
+ssl/*.csr
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Android
+e2e_android/.gradle/
+e2e_android/build/
+e2e_android/app/build/
+e2e_android/app/release/
+e2e_android/*.keystore
+e2e_android/local.properties
+*.apk
+*.aab
+
+# React/Client
+client/build/
+client/node_modules/
+client/.env.local
+
+# Server
+server/node_modules/
+server/dist/
+
+# Test & Coverage
+coverage/
+.nyc_output/
+
+# Misc
+*.tgz
+*.tar.gz
+*.zip
+Thumbs.db

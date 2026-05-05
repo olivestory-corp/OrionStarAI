@@ -1,0 +1,157 @@
+/* App.css - Tailwind utilities and overrides */
+
+/* 视口优化 - 铺满整个屏幕 */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* 防止移动端100vh问题 */
+@supports (-webkit-touch-callout: none) {
+  html, body, #root {
+    height: 100vh;
+    height: 100dvh;
+  }
+}
+
+/* 地图容器 - 自适应高度 */
+.map-container {
+  @apply relative w-full h-full;
+}
+
+/* 消息容器 */
+.messages-container {
+  @apply overflow-y-auto;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  @apply bg-slate-100 rounded-full;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* 消息气泡 */
+.msg-bubble {
+  @apply px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm max-w-xs sm:max-w-sm break-words;
+}
+
+.msg-user {
+  @apply bg-slate-900 text-white rounded-br-none;
+}
+
+.msg-assistant {
+  @apply bg-slate-100 text-slate-900 rounded-bl-none;
+}
+
+.msg-tool {
+  @apply bg-amber-50 text-amber-800 border border-amber-200 rounded-full px-2 py-1;
+}
+
+
+
+/* 产品卡片悬浮效果 */
+.hover-shadow {
+  will-change: transform, box-shadow;
+}
+
+.hover-shadow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+
+/* SVG地图区域交互 */
+svg g[style*="cursor: pointer"] circle {
+  transition: filter 150ms ease-out;
+  will-change: filter;
+}
+
+svg g[style*="cursor: pointer"]:hover circle {
+  filter: brightness(1.2);
+}
+
+/* 平滑过渡 - 仅在必要时应用 */
+button:not(:disabled),
+input:not(:disabled),
+select:not(:disabled),
+textarea:not(:disabled),
+.hover-shadow,
+a {
+  transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out;
+}
+
+/* 禁用态样式 */
+button:disabled, input:disabled, select:disabled, textarea:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* 模态弹窗进入动画 - 使用will-change优化 */
+.animate-in {
+  animation: slideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 淡入淡出 */
+.fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+  will-change: opacity;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 缩放进入 */
+.zoom-in {
+  animation: zoomIn 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 彩色流动边线动画 - 优化版本 */
+.gradient-border {
+  position: relative;
+  background: linear-gradient(#000000, #000000) padding-box,
+              linear-gradient(90deg, #00ff88, #0099ff) border-box;
+  border: 2px solid transparent;
+  border-radius: 0.75rem;
+}
