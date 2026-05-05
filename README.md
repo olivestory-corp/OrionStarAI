@@ -1,6 +1,9 @@
 # OrionStarAI GitHub Mirror & Index
 
-A local mirror and structured index of the public repositories under the
+**Public mirror**: https://github.com/olivestory-corp/OrionStarAI
+**Local path**: `/Users/danny/Desktop/ROBOT/OrionStarAI/`
+
+A mirror and structured index of the public repositories under the
 [OrionStarAI](https://github.com/OrionStarAI) GitHub organization, captured
 on **2026-05-05**.
 
@@ -31,6 +34,20 @@ than redistribute the code.
 The HEAD commit hashes captured at mirror time are recorded in
 [`_meta/PROVENANCE.md`](_meta/PROVENANCE.md), along with refresh commands
 that pull the current upstream HEAD.
+
+## License
+
+This mirror has a two-tier licensing model:
+
+- **Index / metadata files** authored for this mirror — `README.md`,
+  `INDEX.md`, `CLAUDE.md`, the per-category `OVERVIEW.md` files,
+  `_meta/PROVENANCE.md`, `_meta/repos.json`, and `.gitignore` — are
+  released under the [MIT License](LICENSE), © 2026 Olive Story Corp.
+- **Upstream content** under the category subdirectories
+  (`00-voice-realtime/`, `01-robot-skill/`, `02-llm-models/`,
+  `03-ai-coding-tools/`, `04-infra/`) retains its original copyright
+  and license. Refer to each subdirectory's own `LICENSE` file (where
+  present) and to [`_meta/PROVENANCE.md`](_meta/PROVENANCE.md).
 
 ## At a glance
 
